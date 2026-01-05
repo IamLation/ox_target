@@ -71,16 +71,16 @@ p {
   height: 22pt;
   line-height: 22pt;
   border-radius: 5px;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s linear;
-  /* Comment out the "transition" line above and uncomment the one below to disable transitions on hover */
-  /* transition: background 0.2s ease, color 0.2s ease; */
+  /* transition: background 0.2s ease, color 0.2s ease, transform 0.15s linear; */
+  /* Uncomment the "transition" line above and comment out the one below to enable transitions on hover */
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .option-container:hover {
   background: rgba(255, 255, 255, 0.06);
   color: #FFFFFF;
-  /* Comment out the "transform" line below to disable the slight shifting on hover */
-  transform: translateX(4px);
+  /* Uncomment out the "transform" line below to enable shifting animation on hover */
+  /* transform: translateX(4px); */
 }
 
 .option-icon {
