@@ -2,51 +2,25 @@ name: Create release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 jobs:
   create-release:
-    if: github.actor_id != 210085057
     runs-on: ubuntu-latest
     steps:
-      - name: Install zip
-        run: sudo apt install zip
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-
-      - name: Generate GitHub App token
-        id: app_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Get latest code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.repository.default_branch }}
-          token: ${{ steps.app_token.outputs.token }}
 
+      - name: Extract version from fxmanifest
+        id: version
+        run: |
+          VERSION=$(grep "^version" fxmanifest.lua | sed "s/version '\(.*\)'/\1/")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Bump manifest version
-        run: bun run .github/actions/bump-manifest-version.js
-        env:
-          TGT_RELEASE_VERSION: ${{ github.ref_name }}
-
-      - name: Push version bump change
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: fxmanifest.lua
-          push: true
-          default_author: github_actions
-          message: 'chore: bump version to ${{ github.ref_name }}'
-
+      - name: Install zip
+        run: sudo apt install zip
 
       - name: Bundle files
         run: |
@@ -59,10 +33,7 @@ jobs:
         uses: 'marvinpinto/action-automatic-releases@v1.2.1'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: ${{ steps.version.outputs.tag }}
           prerelease: false
+          title: ${{ steps.version.outputs.tag }}
           files: ox_target.zip
-
-      - name: Update tag
-        uses: EndBug/latest-tag@v1
-        with:
-          ref: ${{ github.ref_name }}

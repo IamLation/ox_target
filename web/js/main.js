@@ -8,12 +8,14 @@ window.addEventListener("message", (event) => {
   switch (event.data.event) {
     case "visible": {
       optionsWrapper.innerHTML = "";
+      optionsWrapper.classList.remove("visible");
       body.style.visibility = event.data.state ? "visible" : "hidden";
       return eye.classList.remove("eye-hover");
     }
 
     case "leftTarget": {
       optionsWrapper.innerHTML = "";
+      optionsWrapper.classList.remove("visible");
       return eye.classList.remove("eye-hover");
     }
 
@@ -35,6 +37,10 @@ window.addEventListener("message", (event) => {
             createOptions("zones", data, id + 1, i + 1);
           });
         }
+      }
+
+      if (optionsWrapper.children.length > 0) {
+        optionsWrapper.classList.add("visible");
       }
     }
   }

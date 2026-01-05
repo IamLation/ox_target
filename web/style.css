@@ -1,25 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
-:root {
-  --color-default: #cfd2da;
-  --color-hover: white;
+* {
+  box-sizing: border-box;
 }
 
 body {
   visibility: hidden;
   user-select: none;
-  white-space: nowrap;
   margin: 0;
-  user-select: none;
   overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 p {
   margin: 0;
-}
-
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 40;
 }
 
 #eye {
@@ -27,65 +21,82 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 22pt;
-  fill: black;
+  font-size: 24px;
+  fill: rgba(255, 255, 255, 0.25);
+  transition: fill 0.2s;
 }
 
 .eye-hover {
-  fill: var(--color-default);
+  fill: rgba(207, 210, 218, 1);
 }
 
 #options-wrapper {
   position: absolute;
-  top: calc(48.4%);
-  left: calc(50% + 18pt);
+  top: 50%;
+  left: calc(50% + 30px);
+  transform: translateY(-50%);
+  background: rgba(30, 31, 36, 0.90);
+  border: 1px solid rgba(42, 43, 49, 0.9);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+#options-wrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+#options-wrapper:empty {
+  display: none;
 }
 
 .option-container {
-  color: var(--color-default);
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  font-family: "Nunito";
-  background: linear-gradient(
-    90deg,
-    rgba(20, 20, 20, 0.7) 0%,
-    rgba(20, 20, 20, 0.6) 66%,
-    rgba(47, 48, 53, 0) 100%
-  );
+  gap: 12px;
+  padding: 0 12px;
+  color: #E5E7EB;
   font-size: 11pt;
-  line-height: 22pt;
-  vertical-align: middle;
-  margin: 2pt;
-  transition: 300ms;
-  transform-origin: left top;
-  scale: 1;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
   height: 22pt;
-  width: 150pt;
-  top: 0;
+  line-height: 22pt;
+  border-radius: 5px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s linear;
+  /* Comment out the "transition" line above and uncomment the one below to disable transitions on hover */
+  /* transition: background 0.2s ease, color 0.2s ease; */
 }
 
 .option-container:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(30, 30, 30, 0.7) 0%,
-    rgba(30, 30, 30, 0.6) 66%,
-    rgba(57, 58, 63, 0) 100%
-  );
-  transform-origin: left top;
-  color: var(--color-hover);
-  margin-left: 4pt;
+  background: rgba(255, 255, 255, 0.06);
+  color: #FFFFFF;
+  /* Comment out the "transform" line below to disable the slight shifting on hover */
+  transform: translateX(4px);
 }
 
 .option-icon {
-  font-size: 12pt;
-  line-height: 22pt;
   width: 14pt;
-  margin: 5pt;
-  color: var(--color-default);
+  height: 14pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12pt;
+  color: #9CA3AF;
+  flex-shrink: 0;
 }
 
 .option-label {
-  font-weight: 500;
+  font-weight: 400;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
